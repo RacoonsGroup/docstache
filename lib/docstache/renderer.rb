@@ -65,12 +65,16 @@ module Docstache
         if !(results = text_el.text.scan(/\{\{([\w\.]+)\}\}/).flatten).empty?
           rendered_string = text_el.text
           results.each do |r|
-            rendered_string.gsub!(/\{\{#{r}\}\}/, text(data.get(r)))
+            if data.get(r).nil?
+              text_el.parent.parent.remove
+            else
+              rendered_string.gsub!(/\{\{#{r}\}\}/, text(data.get(r)))
+            end
           end
           text_el.content = rendered_string
         end
       end
-      return elements
+      elements
     end
 
     def text(obj)

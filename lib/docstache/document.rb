@@ -83,7 +83,7 @@ module Docstache
           end
         end
         out.put_next_entry("word/document.xml")
-        out.write(@document.to_xml(indent: 0).gsub("\n", ""))
+        out.write(@document.to_xml(indent: 0).gsub("\n", "").gsub('$break$', "<w:br/>\n   "))
       end
       return buffer
     end
